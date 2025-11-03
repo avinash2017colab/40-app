@@ -2,42 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>What is 40% of...</title>
 
   <style>
-    /* ===== Global Page Style ===== */
-    body {
-      font-family: Arial, sans-serif;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100dvh; /* ✅ Prevents grey-out on iPhones */
-      margin: 0;
       transition: background 0.3s ease;
     }
 
-    /* ===== Container Box ===== */
+    /* dynamically updated height */
+    body.fix-ios {
+      height: var(--vh, 100vh);
+      min-height: var(--vh, 100vh);
+    }
+
     .container {
       background: white;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       text-align: center;
       width: 90%;
       max-width: 320px;
     }
 
-    /* ===== Heading ===== */
     h1 {
       color: #333;
       margin-bottom: 20px;
       font-size: 1.6rem;
     }
 
-    /* ===== Input Box ===== */
     input {
       width: 100%;
       padding: 10px;
@@ -49,7 +52,6 @@
       text-align: center;
     }
 
-    /* ===== Button ===== */
     button {
       background-color: #dc3545;
       color: white;
@@ -65,7 +67,6 @@
       background-color: #a71d2a;
     }
 
-    /* ===== Result Text ===== */
     .result {
       margin-top: 15px;
       font-size: 18px;
@@ -76,25 +77,31 @@
   </style>
 </head>
 
-<body>
+<body class="fix-ios">
   <div class="container">
     <h1>What is 40% of...</h1>
-
     <input
       type="number"
       id="numberInput"
       placeholder="Enter a number"
       oninput="showResult()"
     />
-
     <br />
     <button onclick="clearFields()">Clear</button>
-
     <div class="result" id="result"></div>
   </div>
 
   <script>
-    // ===== Real-time Calculator =====
+    // ✅ Fix for iOS Safari viewport resize
+    function setVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    window.addEventListener('resize', setVh);
+    window.addEventListener('orientationchange', setVh);
+    setVh();
+
+    // Real-time 40% calculator
     function showResult() {
       const input = document.getElementById("numberInput");
       const resultDiv = document.getElementById("result");
@@ -109,7 +116,7 @@
       resultDiv.innerText = `${num} + 40% = ${result.toFixed(2)}`;
     }
 
-    // ===== Clear Input and Result =====
+    // Clear button
     function clearFields() {
       document.getElementById("numberInput").value = "";
       document.getElementById("result").innerText = "";
