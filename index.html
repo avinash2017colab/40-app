@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is 40% of...</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #a71d2a;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #28a745;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>What is 40% of...</h1>
+    <input type="number" id="numberInput" placeholder="Enter a number" oninput="showResult()" />
+    <br />
+    <button onclick="clearFields()">Clear</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function showResult() {
+      const input = document.getElementById("numberInput");
+      const resultDiv = document.getElementById("result");
+      const num = parseFloat(input.value);
+
+      if (isNaN(num)) {
+        resultDiv.innerText = "";
+        return;
+      }
+
+      const result = num + (num * 0.4);
+      resultDiv.innerText = `${num} + 40% = ${result.toFixed(2)}`;
+    }
+
+    function clearFields() {
+      document.getElementById("numberInput").value = "";
+      document.getElementById("result").innerText = "";
+    }
+  </script>
+</body>
+</html>
